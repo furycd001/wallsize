@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# wallsize — interactive image-positioning tool
+# Replaces gravity flags with a live GUI canvas (requires Python 3 + Pillow + ImageMagick).
+#
+# Usage:
+#   ./wallsize [resolution]
+#   ./wallsize 1080x1920
+#   ./wallsize              ← prompts for resolution interactively
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+GUI_SCRIPT="${SCRIPT_DIR}/wallsize_gui.py"
+
+# ── Dependency checks ─────────────────────────────────────────────────────────
+
+check_dep() {
+    command -v "$1" &>/dev/null || {
+        echo "ERROR: '$1' not found. Please install it and try again."
+        exit 1
+    }
+}
+
+check_dep magick     # ImageMagick 7+
+check_dep python3
+
+python3 -c "import PIL" 2>/dev/null || {
+    echo "ERROR: Python package 'Pillow' is not installed."
+    echo "       Run:  pip install Pillow"
+    exit 1
+}
+
+python3 -c "import tkinter" 2>/dev/null || {
+    echo "ERROR: Python 'tkinter' module is not available."
+    echo "       Install it via your package manager, e.g.:"
+    echo "         sudo apt install python3-tk"
+    exit 1
+}
+
+# ── Launch ────────────────────────────────────────────────────────────────────
+
+if [[ ! -f "$GUI_SCRIPT" ]]; then
+    echo "ERROR: GUI script not found at: $GUI_SCRIPT"
+    exit 1
+fi
+
+exec python3 "$GUI_SCRIPT" "$@"
