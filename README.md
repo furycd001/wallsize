@@ -1,7 +1,7 @@
 
 # Wallsize
 
-**Wallsize** is a streamlined, interactive tool designed to take the guesswork out of cropping images for wallpapers. Instead of relying on static gravity flags (like "center" or "north"), it provides a live GUI canvas where you can position images before saving.
+**Wallsize** is designed to take the guesswork out of cropping images for wallpapers. Instead of relying on static gravity flags (like "center" or "north"), it provides a live GUI canvas where you can position images before saving.
 
 It consists of a bash wrapper `wallsize` for dependency management and a python backend `wallsize_gui.py` powered by **[tkinter](https://docs.python.org/3/library/tkinter.html)** and **[ImageMagick](https://imagemagick.org/)**.
 
